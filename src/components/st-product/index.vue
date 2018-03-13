@@ -1,13 +1,13 @@
 <template>
   <div class="st-product">
     <div class="st-product-cheage product-checkout show">
-      <a v-for="item in list" :href="item.href">
+      <router-link v-for="item in list" :to="item.href">
         <span><img v-bind:src="item.mainPicPath" alt=""></span>
         <div class="st-product-describe">
           <p v-html="item.productName"></p>
           <p><s>￥</s><em v-html="item.displayPrice"></em><b>+购物车</b></p>
         </div>
-      </a>
+      </router-link>
     </div>
   </div>
 </template>

@@ -4,7 +4,7 @@
       <li v-for="item in classification">
         <a class="st-footer-a" :href="item.href" v-html="item.shopnew" @click="item.show?Navigation($event):''"></a><i :class="{'display-block':item.show,'display-none':!item.show}"></i>
         <p>
-          <a v-for="sub in item.subclass" :href="sub.href" @click="This_Navigation($event)" :data_id="sub.id" v-html="sub.name"></a>
+          <router-link v-for="items in item.subclass" :to="items.href" @click="This_Navigation($event)" :data_id="items.id" v-html="items.name"></router-link>
         </p>
         <b><s></s></b>
       </li>

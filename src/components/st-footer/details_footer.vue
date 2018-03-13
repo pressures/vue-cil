@@ -2,7 +2,7 @@
   <div class="details-footer">
     <div class="left-shop">
       <span><img src="../../assets/st-shop/icon-0152.png" alt=""></span>
-      <a :href="shophref" class="one"><b><img src="../../assets/st-shop/icon-0116.png" alt=""></b><s>店铺</s></a>
+      <router-link :to="shophref" class="one"><b><img src="../../assets/st-shop/icon-0116.png" alt=""></b><s>店铺</s></router-link>
       <a class="tow"><b><img src="../../assets/st-shop/icon-0117.png" alt=""></b><s>客服</s></a>
       <a class="three" @click="Specifications($event)"><b><img src="../../assets/st-shop/icon-0118.png" alt=""></b><s>购物车</s></a>
     </div>

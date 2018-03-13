@@ -2,11 +2,11 @@
   <div class="home-classification">
     <ul>
       <li>
-        <a v-for="item in classify" :href="item.linkhref"><img :src="item.img" alt=""><span v-html="item.name"></span></a>
+        <router-link v-for="item in classify" :to="item.linkhref"><img :src="item.img" alt=""><span v-html="item.name"></span></router-link>
       </li>
     </ul>
     <!--海报位置-->
-    <div class="poster"><a :href="Advertisement.href"><img :src="Advertisement.img" alt=""></a></div>
+    <div class="poster"><router-link :to="Advertisement.href"><img :src="Advertisement.img" alt=""></router-link></div>
     <!--热卖单品-->
     <div class="numerous">
       <p><s></s><b v-html="numerous"></b></p>
@@ -14,7 +14,7 @@
     <div class="advertisement">
       <ul>
         <li>
-          <a v-for="item in Single" :href="item.href"><img :src="item.img" alt=""></a>
+          <router-link v-for="item in Single" :to="item.href"><img :src="item.img" alt=""></router-link>
         </li>
       </ul>
     </div>
@@ -23,10 +23,10 @@
       <p><s></s><b v-html="Recommend"></b></p>
     </div>
     <div class="st-evaluation-score" v-for="item in stcomments">
-      <a :href="item.href">
+      <router-link :to="item.href">
         <table>
           <tr>
-            <td class="st-evaluating-portrait" rowspan="4"><span><img v-bind:src="item.signageUrl" alt=""></span></td>
+            <td class="evaluating-portrait" rowspan="4"><span><img v-bind:src="item.signageUrl" alt=""></span></td>
             <td><big v-html="item.name"></big></td>
             <td style="text-align:right;color:#666666"><s class="yinye">营</s></td>
           </tr>
@@ -35,7 +35,7 @@
           </tr>
           <tr>
             <td>
-              <span class="st-xingji">
+              <span class="xingji">
                 <s class="st-pingjia-huise huise"><img src="../../assets/st-shop/icon-110.png" alt="">
                   <a :style="{'width':PersonalDeuce(item.evaluateGoodNum,item.evaluateNum)+'%'}"><i class="st-pingjia pingjia"><img src="../../assets/st-shop/icon-109.png" alt=""></i></a>
                 </s>
@@ -43,7 +43,7 @@
               </span>
             </td>
             <td width="28%">
-              <span class="time-distance">
+              <span class="st-time-distance">
                 <s><em v-html="item.distance"></em></s>
                 <b v-html="item.time"></b>
               </span>
@@ -58,7 +58,7 @@
             </td>
           </tr>
         </table>
-      </a>
+      </router-link>
     </div>
   </div>
 </template>
@@ -217,7 +217,7 @@
   .st-degree span s i img{
     display: block;
   }
-  .st-xingji{
+  .xingji{
     display: inline-block;
     webkit-box-align: center;
     -webkit-align-items: center;
@@ -226,30 +226,30 @@
     display: flex;
     align-items: center;
   }
-  .st-xingji s{
+  .xingji s{
     position: relative;
     overflow: hidden;
     display: inline-block;
     width: 45%;
     max-width: 152px;
   }
-  .st-xingji s img{
+  .xingji s img{
     display: inline-block;
   }
-  .st-xingji s a{
+  .xingji s a{
     position: absolute;
     left: 0;
     top:0;
     overflow: hidden;
     height: 100%;
   }
-  .st-xingji s a i{
+  .xingji s a i{
     position: absolute;
     top: 0;
     left: 0;
     z-index: 20;
   }
-  .st-xingji b{
+  .xingji b{
     margin-left: 10px;
     color: #999;
   }
@@ -264,7 +264,7 @@
       width: 60%;
       margin-left: 10px;
     }
-    .st-degree span s img,.st-xingji .st-pingjia-huise img{
+    .st-degree span s img,.xingji .st-pingjia-huise img{
       width: 100%;
     }
   }
@@ -291,10 +291,10 @@
     color: #33be63;
     background: #EFFFF5;
   }
-  .st-evaluating-portrait{
+  .evaluating-portrait{
     width: 60px;
   }
-  .st-evaluating-portrait span{
+  .evaluating-portrait span{
     display: block;
     width: 80px;
     height: 80px;
@@ -302,7 +302,7 @@
     background: #cccccc;
     margin-right: 10px;
   }
-  .st-evaluating-portrait span img{
+  .evaluating-portrait span img{
     width: 100%;
   }
   .st-evaluation-score{
@@ -329,15 +329,17 @@
   .state s{
     margin-left: 10px;
   }
-  .time-distance{
+  .st-time-distance{
     display: block;
     float: right;
     color: #999;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
-  .time-distance b,.time-distance s{
+  .st-time-distance b,.st-time-distance s{
     display: inline-block;
   }
-  .time-distance b::before{
+  .st-time-distance b::before{
     content: '|';
     margin-right: 4px;
   }

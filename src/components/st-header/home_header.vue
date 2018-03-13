@@ -5,7 +5,7 @@
         <span class="dingwei"><img src="../../assets/st-shop/icon-01.png" alt=""></span>
         <s class="address" v-html="header.address">江干区白杨街道111111111</s>
         <b class="slide"><img src="../../assets/st-shop/icon-02.png" alt=""></b>
-        <a :href="header.newshref" class="asuccess"><img src="../../assets/st-shop/icon-03.png" alt=""></a>
+        <router-link :to="header.newshref" class="asuccess"><img src="../../assets/st-shop/icon-03.png" alt=""></router-link>
       </p>
       <p><input @focus="Inputchange($event)" @blur="Inputblur($event)" type="text" placeholder="输入体验店,商品名称"><b class="home-position"><img src="../../assets/st-shop/icon-04.png" alt=""></b></p>
     </div>

@@ -17,7 +17,7 @@
         <s v-html="merchants.workday=='00'||merchants.businessHoursBegin=='00'||merchants.businessHoursEnd=='00:00'?'营业时间：24小时':'营业时间：'+merchants.workday+'：'+merchants.businessHoursBegin+'～'+merchants.businessHoursEnd"></s>
       </div>
       <div class="st-contact-business st-business-number">
-        <a v-for="item in merchants.merchant" :href="item.telephone" v-html="item.message"></a>
+        <router-link v-for="item in merchants.merchant" :to="item.telephone" v-html="item.message"></router-link>
       </div>
     </div>
   </div>

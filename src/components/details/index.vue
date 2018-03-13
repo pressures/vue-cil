@@ -42,7 +42,7 @@
     <div class="selling">
       <p>热销推荐</p>
       <div class="tuijin">
-        <a v-for="item in list" :href="item.href"><span><img :src="item.mainPicPath" alt=""></span><s>￥<em v-html="item.displayPrice">0.00</em></s></a>
+        <router-link v-for="item in list" :to="item.href"><span><img :src="item.mainPicPath" alt=""></span><s>￥<em v-html="item.displayPrice">0.00</em></s></router-link>
       </div>
     </div>
     <div class="selling margin">
