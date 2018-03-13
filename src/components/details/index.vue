@@ -1,0 +1,289 @@
+<template>
+  <div class="details">
+    <div class="particulars-img"><img :src="product.mainPicPath" alt=""></div>
+    <div class="specifications">
+      <p v-html="product.productName">海鲜组合1冰冻海鲜海鲜组合1冰冻海鲜海鲜组合1</p>
+      <div class="price">
+        <span>￥<em v-html="product.displayPrice">125.00</em></span>
+        <a @click="Specifications($event)">选规格</a>
+      </div>
+      <div class="profit">
+        <span>配送:<em>0.5</em></span>
+        <span>佣金:<em v-html="productSkuList.commission">0.5</em></span>
+        <span>利润:<em v-html="productSkuList.profit">0.5</em></span>
+      </div>
+    </div>
+    <div class="details-shopname">
+      <ul>
+        <li><span><img src="../../assets/st-shop/icon-0111.png" alt=""></span><s style="font-size: 1.3rem;color: #333" v-html="product.shopName">雅供冷链专共</s></li>
+        <li v-html="product.status==0?'该商品已下架！':'在售'"></li>
+        <li>
+          <a><b><img src="../../assets/st-shop/icon-0112.png" alt=""></b><s>正品保障</s></a>
+          <a><b><img src="../../assets/st-shop/icon-0112.png" alt=""></b><s>线下门店</s></a>
+          <a><b><img src="../../assets/st-shop/icon-0112.png" alt=""></b><s>七天退货</s></a>
+        </li>
+      </ul>
+    </div>
+    <div class="product-pingjia">
+      <span>商品评价(<em v-html="pjlength">123</em>)</span>
+      <span class="st-xingji">
+        <em><img src="../../assets/st-shop/icon-0004.png" alt=""></em>
+        <s class="st-pingjia-huise huise">
+          <img class="imgwidth" src="/static/img/icon-110.d01a7b4.png" alt="">
+          <a :style="{'width':pingjia+'%'}">
+            <i class="st-pingjia pingjia">
+              <img src="/static/img/icon-109.09681c4.png" alt="">
+            </i>
+          </a>
+        </s>
+        <b>综合评价</b>
+      </span>
+    </div>
+    <div class="selling">
+      <p>热销推荐</p>
+      <div class="tuijin">
+        <a v-for="item in list" :href="item.href"><span><img :src="item.mainPicPath" alt=""></span><s>￥<em v-html="item.displayPrice">0.00</em></s></a>
+      </div>
+    </div>
+    <div class="selling margin">
+      <p>商品详情</p>
+      <div class="details-img">
+        <span v-html="productDescription"></span>
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+  export default {
+    name:"particulars",
+    props:{
+      product:Object,
+      productSkuList:Object,
+      pingjia:Number,
+      pjlength:Number,
+      productDescription:String,
+      Specifications:Function,
+      list:Array
+    }
+  }
+</script>
+<style>
+  .particulars-img{
+    width: 100%;
+    min-height: 300px;
+  }
+  .particulars-img img{
+    width: 100%;
+    display: block;
+  }
+  .specifications{
+    width: 100%;
+    margin-top: 5px;
+  }
+  .specifications p{
+    padding: 0 10px;
+    padding-top: 10px;
+    margin: 0;
+    font-size: 1.2rem;
+    background: #fff;
+  }
+  .price{
+    background: #fff;
+    padding: 0 10px;
+    overflow: hidden;
+    webkit-box-align: center;
+    -webkit-align-items: center;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+  .price span{
+    color: #F12828;
+    line-height: 40px;
+  }
+  .price a{
+    display: block;
+    padding: 0 10px;
+    background: #0bb20c;
+    color: #fff;
+    border-radius: 20px;
+    line-height: 2rem;
+    position: absolute;
+    right: 10px;
+  }
+  .price span em{
+    font-size: 1.5rem;
+  }
+  .profit{
+    background: #fff;
+    overflow: hidden;
+    padding: 0 10px;
+    margin-top: 1px;
+    line-height: 3rem;
+    display:flex;
+    justify-content:space-between;
+  }
+  .profit span{
+    display: inline-block;
+    color: #777;
+  }
+  .details-shopname{
+    background: #fff;
+    margin-top: 5px;
+    padding: 0 10px;
+  }
+  .details-shopname ul{
+    margin: 0;
+    padding: 0;
+  }
+  .details-shopname ul li{
+    list-style: none;
+    webkit-box-align: center;
+    -webkit-align-items: center;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    align-items: center;
+    color: #777;
+  }
+  .details-shopname ul li img{
+    width: 100%;
+    display: block;
+  }
+  .details-shopname ul li a{
+    webkit-box-align: center !important;
+    -webkit-align-items: center !important;
+    display: -webkit-box !important;
+    display: -webkit-flex !important;
+    display: flex !important;
+    align-items: center !important;
+  }
+  .details-shopname ul li span,.details-shopname ul li a,.details-shopname ul li s,.details-shopname ul li b{
+    display: inline-block;
+    line-height: 40px;
+  }
+  .details-shopname ul li span,.details-shopname ul li b{
+    width: 18px;
+    margin-right: 5px;
+  }
+  .details-shopname ul li s{
+    margin-right: 10px;
+  }
+  .product-pingjia{
+    display:flex;
+    justify-content:space-between;
+    background: #fff;
+    margin-top: 5px;
+    padding: 5px 10px;
+    overflow: hidden;
+    webkit-box-align: center;
+    -webkit-align-items: center;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    align-items: center;
+  }
+  .product-pingjia span{
+    display: inline-block;
+    font-size: 1.2rem;
+  }
+  .st-xingji{
+    display: inline-block;
+    overflow: hidden;
+    line-height: 34px;
+  }
+  .st-xingji b{
+    font-size: 1rem;
+    color: #777;
+  }
+  .st-xingji em{
+    display: inline-block;
+    width: .5rem;
+    transform:rotate(180deg);
+  }
+  .st-xingji em,.st-xingji s,.st-xingji b{
+    float: right;
+    display: block;
+
+  }
+  .st-xingji s{
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    width: 40%;
+    margin: 0 5px;
+  }
+  .st-xingji s img,.st-xingji em img{
+    display: inline-block;
+    width: 100%;
+  }
+  .st-xingji s a{
+    position: absolute;
+    left: 0;
+    top:0;
+    overflow: hidden;
+    height: 100%;
+  }
+  .st-xingji s a i{
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 20;
+  }
+  .selling{
+    background: #fff;
+    overflow: hidden;
+    margin-top: 5px;
+    padding: 0 10px;
+  }
+  .selling .tuijin{
+    overflow: hidden;
+  }
+  .selling .tuijin a{
+    display: block;
+    float: left;
+    width: 23%;
+    margin: 1%;
+    overflow: hidden;
+  }
+  .selling .tuijin a img{
+    width: 100%;
+  }
+  .selling .tuijin a s{
+    display: block;
+    text-align: center;
+    color: #F12828;
+  }
+  .selling .tuijin a span{
+    display: block;
+    width: 100%;
+    overflow: hidden;
+    height: 86px;
+  }
+  .selling p{
+    font-size: 1.3rem;
+    margin: 0;
+    padding: 8px 0;
+  }
+  .details-img{
+    padding-bottom: 12%;
+  }
+  .details-img img{
+    width: 100%;
+    display: block;
+  }
+  .margin{
+    padding: 0;
+  }
+  .margin p{
+    padding: 10px;
+  }
+  @media screen and (min-width:720px){
+
+  }
+  @media screen and (max-width:720px){
+
+  }
+</style>
