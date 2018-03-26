@@ -6,17 +6,38 @@ export default {
   },
   data(){
     return{
+      latitude:'',
+      longitude:'',
       merchants:{}
     }
   },
   methods: {
+    //百度地图调用
+    ready: function() {
+      var that = this
+      var map = new BMap.Map("allmap");
+      var point = new BMap.Point(this.longitude,this.latitude);
+      map.centerAndZoom(point, 15);
+      var marker = new BMap.Marker(point);  // 创建标注
+      map.addOverlay(marker);               // 将标注添加到地图中
+      marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+      map.addEventListener('click',function () {
+        $('.baidu-map').show()
+        var map1 = new BMap.Map("allmap1");
+        var point = new BMap.Point(that.longitude,that.latitude);
+        map1.centerAndZoom(point, 15);
+        var marker = new BMap.Marker(point);  // 创建标注
+        map1.addOverlay(marker);               // 将标注添加到地图中
+        marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+      });
+    },
     //店铺信息
     Created: function () {
       //获取数据
       var that = this
       var params = {
         shopId: that.$route.query.shopId,
-        Callback:that.$route.query.Callback
+        Callback:'jsonp'
       }
       var url = "https://chat.yggx.com/index.php/shop/storetopinfo.html";
       $.ajax({
@@ -35,7 +56,9 @@ export default {
             split = String(WorkTime).split('.')
             HoursEnd = String(WorkTimend).split('.')
             days = String(workday).split(',')
-            // console.log(res.data.businessHoursEnd)
+            that.latitude = res.data.latitude
+            that.longitude = res.data.longitude
+
             var date = "星期"
             for (var i=0;i<days.length;i++){
               switch (days[i]){
@@ -72,12 +95,14 @@ export default {
             if(WorkTimend==0){
               HoursEnd = [0,0]
             }
+            if(HoursEnd[1]==undefined){
+              HoursEnd[1] = 0
+            }
             if(HoursEnd[0]<10){
               res.data.businessHoursEnd = "0"+HoursEnd[0]+":"+HoursEnd[1]+"0"
             }else {
               res.data.businessHoursEnd = HoursEnd[0]+":"+HoursEnd[1]+"0"
             }
-
             if(split[1]!==undefined){
               split[1] = split[1]
             }else {
@@ -91,23 +116,27 @@ export default {
             var merchant = [
               {
                 message:"联系商家",
-                telephone:'tel://'+res.data.telephone,
+                telephone:'https://chat.yggx.com/tel='+res.data.telephone,
               },
               {
                 message:"发消息",
-                telephone:""
+                telephone:"/wannp?uid="+res.data.shopNum
               }
             ]
             Vue.set(res.data,"merchant",merchant)
             that.merchants = res.data
           } else {
-            alert('请求失败')
+            alert('请求失败6')
           }
         }
       })
     },
   },
   mounted(){
+    var that = this
     this.Created()
+    setTimeout(function () {
+      that.ready()
+    },1500)
   }
 }

@@ -1,6 +1,12 @@
 <template>
   <div class="details">
-    <div class="particulars-img"><img :src="product.mainPicPath" alt=""></div>
+    <div class="particulars-img">
+      <swiper :options="swiperOption" ref="mySwiper" class="">
+        <!-- slides -->
+        <swiper-slide v-for="item in productDetailImgsList"><img v-lazy="item.url" alt=""></swiper-slide>
+        <div class="swiper-pagination" slot="pagination"></div>
+      </swiper>
+    </div>
     <div class="specifications">
       <p v-html="product.productName">海鲜组合1冰冻海鲜海鲜组合1冰冻海鲜海鲜组合1</p>
       <div class="price">
@@ -26,13 +32,13 @@
     </div>
     <div class="product-pingjia">
       <span>商品评价(<em v-html="pjlength">123</em>)</span>
-      <span class="st-xingji">
-        <em><img src="../../assets/st-shop/icon-0004.png" alt=""></em>
+      <span class="st-details-xingji">
+        <!--<em><img src="../../assets/st-shop/icon-0004.png" alt=""></em>-->
         <s class="st-pingjia-huise huise">
-          <img class="imgwidth" src="/static/img/icon-110.d01a7b4.png" alt="">
+          <img class="imgwidth" src="../../assets/st-shop/icon-110.png" alt="">
           <a :style="{'width':pingjia+'%'}">
             <i class="st-pingjia pingjia">
-              <img src="/static/img/icon-109.09681c4.png" alt="">
+              <img src="../../assets/st-shop/icon-109.png" alt="">
             </i>
           </a>
         </s>
@@ -42,7 +48,7 @@
     <div class="selling">
       <p>热销推荐</p>
       <div class="tuijin">
-        <router-link v-for="item in list" :to="item.href"><span><img :src="item.mainPicPath" alt=""></span><s>￥<em v-html="item.displayPrice">0.00</em></s></router-link>
+        <a v-for="item in list" :href="item.href"><span><img v-lazy="item.mainPicPath" alt=""></span><s>￥<em v-html="item.displayPrice">0.00</em></s></a>
       </div>
     </div>
     <div class="selling margin">
@@ -54,6 +60,7 @@
   </div>
 </template>
 <script>
+  import { swiper, swiperSlide } from 'vue-awesome-swiper'
   export default {
     name:"particulars",
     props:{
@@ -63,7 +70,9 @@
       pjlength:Number,
       productDescription:String,
       Specifications:Function,
-      list:Array
+      list:Array,
+      swiperOption:Object,
+      productDetailImgsList:Array
     }
   }
 </script>
@@ -78,7 +87,6 @@
   }
   .specifications{
     width: 100%;
-    margin-top: 5px;
   }
   .specifications p{
     padding: 0 10px;
@@ -184,49 +192,57 @@
     display: -webkit-flex;
     display: flex;
     align-items: center;
+    overflow: hidden;
   }
   .product-pingjia span{
     display: inline-block;
     font-size: 1.2rem;
   }
-  .st-xingji{
+  .product-pingjia span:first-child{
+    float: left;
+    line-height: 34px;
+  }
+  .product-pingjia span:last-child{
+    float: right;
+  }
+  .st-details-xingji{
     display: inline-block;
     overflow: hidden;
     line-height: 34px;
   }
-  .st-xingji b{
+  .st-details-xingji b{
     font-size: 1rem;
     color: #777;
   }
-  .st-xingji em{
+  .st-details-xingji em{
     display: inline-block;
     width: .5rem;
     transform:rotate(180deg);
   }
-  .st-xingji em,.st-xingji s,.st-xingji b{
+  .st-details-xingji em,.st-details-xingji s,.st-details-xingji b{
     float: right;
     display: block;
 
   }
-  .st-xingji s{
+  .st-details-xingji s{
     position: relative;
     overflow: hidden;
     display: inline-block;
     width: 40%;
     margin: 0 5px;
   }
-  .st-xingji s img,.st-xingji em img{
+  .st-details-xingji s img,.st-details-xingji em img{
     display: inline-block;
     width: 100%;
   }
-  .st-xingji s a{
+  .st-details-xingji s a{
     position: absolute;
     left: 0;
     top:0;
     overflow: hidden;
     height: 100%;
   }
-  .st-xingji s a i{
+  .st-details-xingji s a i{
     position: absolute;
     top: 0;
     left: 0;
@@ -268,7 +284,7 @@
     padding: 8px 0;
   }
   .details-img{
-    padding-bottom: 12%;
+    overflow: hidden;
   }
   .details-img img{
     width: 100%;
@@ -278,12 +294,6 @@
     padding: 0;
   }
   .margin p{
-    padding: 10px;
-  }
-  @media screen and (min-width:720px){
-
-  }
-  @media screen and (max-width:720px){
-
+    margin: 10px;
   }
 </style>

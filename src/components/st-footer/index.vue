@@ -1,10 +1,10 @@
 <template>
   <div class="st-footer">
     <ul>
-      <li v-for="item in classification">
-        <a class="st-footer-a" :href="item.href" v-html="item.shopnew" @click="item.show?Navigation($event):''"></a><i :class="{'display-block':item.show,'display-none':!item.show}"></i>
+      <li v-for="(item,index) in classification">
+        <a class="st-footer-a" v-html="item.shopnew" @click="Navigation($event,index)"></a><i :class="{'display-block':item.show,'display-none':!item.show}"></i>
         <p>
-          <router-link v-for="items in item.subclass" :to="items.href" @click="This_Navigation($event)" :data_id="items.id" v-html="items.name"></router-link>
+          <router-link v-for="items in item.subclass" :to="''+items.href" @click.native="This_Navigation($event)" :data_id="items.id" v-html="items.name"></router-link>
         </p>
         <b><s></s></b>
       </li>
@@ -17,7 +17,8 @@
     props:{
       classification:Array,
       This_Navigation:Function,
-      Navigation:Function
+      Navigation:Function,
+      Bottomclass:Function
     }
   }
 </script>
@@ -41,12 +42,16 @@
     text-align: center;
     position: relative;
     padding: 10px 0;
+    cursor: pointer;
+    z-index: 1000;
   }
   .st-footer ul li .st-footer-a{
     font-size: 1.2rem !important;
     text-decoration: none;
     color: #333333;
     display: block;border-right: 1px solid #c5c5c5;
+    cursor: pointer;
+    line-height: 2.2rem;
   }
   .st-footer ul li:last-child .st-footer-a{
     border-right: 0;
@@ -64,7 +69,7 @@
   }
   .st-footer ul li p{
     position: absolute;
-    bottom: 50px;
+    bottom: 56px;
     left: 50%;
     margin: 0;
     margin-left: -50px;
@@ -74,7 +79,7 @@
     width: 80px;
     border-radius: 5px;
     border: 1px solid #cccccc;
-    z-index: 999;
+    z-index: 2000;
     display: none;
   }
   .st-footer ul li p a{
@@ -94,7 +99,7 @@
     top: -11px;
     left: 50%;
     margin-left: -5px;
-    z-index: 1000;
+    z-index: 2500;
     display: none;
   }
   .st-footer ul li s{

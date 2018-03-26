@@ -1,19 +1,23 @@
 <template>
-  <div>
+  <div class="default-details">
     <details-header
       :Collection="Collection"
+      :Return="Return"
       :DetailsClisk="DetailsClisk"/>
     <particulars
       :product="product"
+      :swiperOption="swiperOption"
       :pingjia="pingjia"
       :pjlength="pjlength"
       :Specifications="Specifications"
+      :productDetailImgsList="productDetailImgsList"
       :list="list"
       :productDescription="productDescription"
       :productSkuList="productSkuList"/>
     <details-footer
       :DetailsClisk="DetailsClisk"
       :shophref="shophref"
+      :kefuhref="kefuhref"
       :Specifications="Specifications"/>
     <popup
       :product="product"
@@ -30,6 +34,11 @@
     <layer :DetailsCliskclose="DetailsCliskclose"/>
   </div>
 </template>
+<style>
+  .default-details{
+    overflow: hidden;
+  }
+</style>
 <script>
   import Vue from "vue"
   import DetailsHeader from "../components/st-header/details_header.vue"
@@ -37,6 +46,8 @@
   import DetailsFooter from "../components/st-footer/details_footer.vue"
   import Popup from "../components/st-popup/index.vue"
   import Layer from "../components/st-popup/layer.vue"
+  import shop from "../../data/shop"
+  require('swiper/dist/css/swiper.css')
   export default {
     components:{
       DetailsHeader,
@@ -48,6 +59,16 @@
     data(){
       return {
         product:{},
+        //swiper 参数设置
+        swiperOption: {
+          notNextTick: true,
+          speed: 300,
+          autoplayDisableOnInteraction:false,
+          pagination: {
+            el: '.swiper-pagination',
+          }
+        },
+        productDetailImgsList:[],
         productSkuList:{},
         SkuList:[],
         productDescription:"",
@@ -57,7 +78,8 @@
         counter: 1,
         skuprice:0,
         Stock:0,
-        shophref:""
+        shophref:"",
+        kefuhref:''
       }
     },
     computed:{
@@ -66,7 +88,19 @@
         return pirce
       }
     },
+    created() {
+      this.AjaxDetails()
+    },
+    watch: {
+      // 如果路由有变化，会再次执行该方法
+      "$route": ["AjaxDetails"]
+    },
     methods:{
+      //返回
+      Return:function () {
+        window.location.href = "https://chat.yggx.com/back"
+        //this.$router.go(-1)
+      },
       Specifications:function (event) {
         $(event.target).parents('body').find('.popup').fadeIn()
         $('.popup-fixed-2').css({marginTop:-($('.popup-fixed-2').height()/2)+'px'})
@@ -77,11 +111,11 @@
       //商品详情
       AjaxDetails:function () {
         var that = this
-        var url = 'http://chat.yggx.com/index.php/product/showProductInfoJsonp.html'
+        var url = 'https://chat.yggx.com/index.php/product/showProductInfoJsonp.html'
         var pramits = {
           token:that.$route.query.token,
           id:that.$route.query.id,//7064
-          Callback:that.$route.query.Callback
+          Callback:'jsonp'
         }
         function htmlspecialchars_decode(str){
           str = str.replace(/&amp;/g, '&');
@@ -100,6 +134,11 @@
             if(res.code == "SUCCESS"){
               res.data.product.mainPicPath = unescape(res.data.product.mainPicPath)
               that.product = res.data.product
+              for (var i=0;i<res.data.productDetailImgsList.length;i++){
+                res.data.productDetailImgsList[i].url = unescape(res.data.productDetailImgsList[i].url)
+              }
+              that.productDetailImgsList = res.data.productDetailImgsList
+              console.log(that.productDetailImgsList)
               that.productSkuList = res.data.productSkuList[0]
               for (var i=0;i<res.data.productSkuList.length;i++){
                 Vue.set(res.data.productSkuList[i],"active",false)
@@ -128,10 +167,13 @@
               that.Stock = res.data.productSkuList[0].stockNum
               that.skuprice = res.data.productSkuList[0].price
               that.SkuList = res.data.productSkuList
+
               var description = htmlspecialchars_decode(res.data.productDescription.description);
               that.productDescription = description
               //店铺跳转
-              that.shophref = '/node/shop/home'+'?shopId='+that.$route.query.shopId+'&Callback='+that.$route.query.Callback+'&uid='+that.$route.query.uid+'&storeCategoryId='
+              that.shophref = 'https://chat.yggx.com/Public/node/#/node/shop/home'+'?shopId='+that.product.shopId+'&token='+that.$route.query.token+'&uid='+that.product.uid
+              //客服
+              that.kefuhref = '/wannp?uid='+that.product.uid
               //综合评价
               var Attitude = 0
               var Description = 0
@@ -139,7 +181,7 @@
               var pinjia = {
                 sellerId:that.product.uid,
                 productId:that.$route.query.id,
-                Callback:that.$route.query.Callback
+                Callback:'jsonp'
               }
               $.ajax({
                 url:'https://chat.yggx.com/index.php/shop/select_evaluation.html',
@@ -174,8 +216,8 @@
           showSort:'id',
           showOrder:'desc',
           storeCategoryId:'',
-          stockNum:that.$route.query.stockNum,
-          Callback:that.$route.query.Callback
+          stockNum:that.$route.query.stockNum,//库存
+          Callback:'jsonp'
         }
         //热卖推荐
         $.ajax({
@@ -201,23 +243,18 @@
                 $push.push(ranNum)
               }
               var details = '/node/details'+
-                '?Callback='+that.$route.query.Callback+
-                '&token=78ac5vlm7v5fo933gp16jpud42'+
-                '&shopId='+that.$route.query.shopId+
-                '&uid='+that.$route.query.uid
+                '?token='+that.$route.query.token
               var list = new Array()
               for (var p=0;p<$push.length;p++){
                 var l = $push[p]
-                Vue.set(res.data.rows[l],"href",details+'&id='+res.data.rows[l].id)
+                Vue.set(res.data.rows[l],"href",'https://chat.yggx.com/Public/node/#'+details+'&id='+res.data.rows[l].id)
                 list.push(res.data.rows[l])
               }
               that.list = list
-            }else {
-              alert('请求失败！请重试...')
             }
           },
           error:function (res) {
-            console.log('请求失败:')
+            alert('请求失败:')
           }
         })
       },
@@ -237,20 +274,24 @@
           skuRuleName:$(event.target).parents('.popup-fixed-2').find('.active').attr('data-skuRuleName'),
           amount:that.counter,
           mainPicPath:that.product.mainPicPath,
-          Callback:that.$route.query.Callback
+          Callback:'jsonp'
         }
-        $.ajax({
-          url:url,
-          data:pramit,
-          type:'post',
-          dataType:'jsonp',
-          success:function (res) {
-            that.$layer.msg("已为您入购物车!");
-          },
-          error:function (res) {
-            that.$layer.msg("加入购物车失败!");
-          }
-        })
+        if($(event.target).parents('.popup-fixed-2').find('.active').attr('data-Stock') == 0 ) {
+          that.$layer.msg('抱歉！此规格商品已经没有库存...')
+        }else {
+          $.ajax({
+            url:url,
+            data:pramit,
+            type:'post',
+            dataType:'jsonp',
+            success:function (res) {
+              that.$layer.msg("已为您入购物车!");
+            },
+            error:function (res) {
+              that.$layer.msg("加入购物车失败!");
+            }
+          })
+        }
       },
       //添加收藏
       Collection:function () {
@@ -259,7 +300,7 @@
         var pramit = {
           token:that.$route.query.token,
           productId:that.product.id,
-          Callback:that.$route.query.Callback
+          Callback:'jsonp'
         }
         $.ajax({
           url:url,
@@ -276,6 +317,15 @@
       },
       //分享
       DetailsClisk:function (event) {
+        var paramete =
+          '?{"shareid":'+'"'+this.product.id+'"'+
+          ',"shareName":'+'"'+this.product.productName+'"'+
+          ',"shareUrl":'+'"'+this.product.mainPicPath+'"'+
+          ',"address":'+'"'+this.product.shopName+'"'+
+          ',"type":2}'
+        $.each($(event.target).parents('body').find('#layerdetails .sharebox p a'),function (i) {
+          $(this).attr('href',$(this).attr('href')+encodeURI(paramete))
+        })
         $(event.target).parents('body').find('#layerdetails').slideDown()
       },
       DetailsCliskclose:function (event) {
@@ -304,16 +354,18 @@
       //立即购买
       Purchase:function (event) {
         var that = this
-        if($(event.target).parents('.popup-fixed-2').find('.Specifications .active').html()==undefined){
-          $(event.target).parents('.popup-fixed-2').find('.choice').show()
-        }
         var url = 'https://chat.yggx.com/buy/'
         var pramit = '{"skuId":"'+$(event.target).parents('.popup-fixed-2').find('.active').attr('data-skuid')+'",' +
           '"buyAmount":"'+$(event.target).parents('.popup-fixed-2').find('.popup-button .button input').val()+'",' +
           '"freightItemId":'+$(event.target).parents('.popup-fixed-2').find('.active').attr('data-freightTemplateId')+',' +
           '"shopId":'+$(event.target).parents('.popup-fixed-2').find('.active').attr('data-shopId')+',' +
           '"isDiscount":'+$(event.target).parents('.popup-fixed-2').find('.active').attr('data-isDiscount')+'}'
-        window.location.href=url+pramit
+        if($(event.target).parents('.popup-fixed-2').find('.active').attr('data-Stock') == 0 ) {
+          that.$layer.msg('抱歉！此规格商品已经没有库存...')
+        }else {
+          window.location.href=url+pramit
+        }
+
       },
       //选择规格
       selectStyle(item, index,event) {
@@ -323,9 +375,15 @@
           });
           Vue.set(item, 'active', true);
         });
+
         $(event.target).parents('.popup-fixed-2').find('.choice').hide()
         this.skuprice = item.price
         this.Stock = item.stockNum
+        if(item.stockNum===0){
+          $(event.target).parents('.popup-fixed-2').find('.popup-button a').addClass('grayness')
+        }else {
+          $(event.target).parents('.popup-fixed-2').find('.popup-button a').removeClass('grayness')
+        }
         this.counter = 1
         if(this.counter<this.Stock){
           $(event.target).parents('.popup-fixed-2').find('b.Reduce').css({background:"#0bb20c"})

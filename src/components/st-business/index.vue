@@ -10,28 +10,36 @@
         <b style="padding-right: 70px">
           <s v-html="merchants.systemAddress+merchants.detailAddress"></s>
         </b>
-        <b class="st-weizhi"><i><img src="../../assets/st-shop/icon-108.png" alt=""></i></b>
+        <b class="st-weizhi"><i id="allmap"><img src="../../assets/st-shop/icon-108.png" alt=""></i></b>
       </div>
       <div class="st-business-number">
         <span><img src="../../assets/st-shop/icon-107.png" alt=""></span>
         <s v-html="merchants.workday=='00'||merchants.businessHoursBegin=='00'||merchants.businessHoursEnd=='00:00'?'营业时间：24小时':'营业时间：'+merchants.workday+'：'+merchants.businessHoursBegin+'～'+merchants.businessHoursEnd"></s>
       </div>
       <div class="st-contact-business st-business-number">
-        <router-link v-for="item in merchants.merchant" :to="item.telephone" v-html="item.message"></router-link>
+        <a v-for="item in merchants.merchant" :href="item.telephone" v-html="item.message"></a>
       </div>
     </div>
+    <div class="baidu-map" id="allmap1"><span class="close-baidu">X</span></div>
   </div>
 </template>
 <script>
   export default {
     name:"ShangJia",
     props:{
-      merchants:Object
+      merchants:Object,
     }
   }
 </script>
 <style>
+  /* 去掉地图左下角的百度LOGO */
+  .anchorBL {
+    display:none
+  }
   /*business 商家*/
+  .st-product{
+    position: relative;
+  }
   .st-product-business{
 
   }
@@ -58,6 +66,7 @@
     display: flex;
     align-items: center;
     position: relative;
+    min-height: 36px;
   }
   .st-address b{
     display: table-cell;
@@ -95,6 +104,11 @@
     display: inline-block;
     margin-left: 10px;
   }
+  .st-weizhi{
+    position: absolute;
+    top: 5px;
+    right: 0;
+  }
   .st-weizhi i{
     display: block;
     width: 46px;
@@ -104,5 +118,25 @@
   .st-weizhi i img{
     width: 100%;
     display: block;
+  }
+  .baidu-map{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 200%;
+    background: #0bb20c;
+    overflow: hidden;
+    display: none;
+  }
+  .close-baidu{
+    display: inline-block;
+    padding: 5px 10px;
+    font-size: 2rem;
+    position: absolute;
+    right: 0;
+    top: 0;
+    background: #007aff;
+    z-index: 100;
   }
 </style>

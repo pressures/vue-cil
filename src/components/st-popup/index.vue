@@ -8,7 +8,8 @@
         <div class="Specifications">
           <a v-for="(item, $index) in SkuList" :class="{'active':item.active,'undactive':!item.active}"
              @click="selectStyle(item, $index,$event)"
-             :data-skuid="item.skuId"
+             :data-skuid="item.id"
+             :data-Stock="item.stockNum"
              :data-productId="product.id"
              :data-freightTemplateId="product.freightTemplateId"
              :data-shopId="product.shopId"
@@ -54,6 +55,9 @@
   }
 </script>
 <style>
+  .grayness{
+    background: #cccccc !important;
+  }
   .popup{
     display: none;
   }
@@ -102,7 +106,9 @@
     padding: 0 20px;
   }
   .Specifications{
-    overflow: hidden;
+    /*overflow: hidden;*/
+    max-height: 98px;
+    overflow: auto;
   }
   .Specifications a{
     display: block;
@@ -118,6 +124,7 @@
     border: 1px solid #1CB957;
   }
   .popup-button{
+    overflow: hidden;
     padding: 10px 20px;
     border-top: 1px solid #f1f1f1;
     margin-top: 10px;
@@ -133,6 +140,9 @@
   }
   .popup-button span{
     color: #F12828;
+    float: left;
+    display: block;
+    line-height: 28px;
   }
   .popup-button span em{
     font-size: 1.5rem;
@@ -142,19 +152,21 @@
   }
   .popup-button a{
     display: inline-block;
-    padding: 5px 16%;
+    padding: 3% 16%;
     background: #0bb20c;
     color: #fff;
     border-radius: 20px;
     margin: 0 2px;
   }
   .button{
+    float: right;
     webkit-box-align: center;
     -webkit-align-items: center;
     display: -webkit-box;
     display: -webkit-flex;
     display: flex;
     align-items: center;
+    overflow: hidden;
   }
   .button b{
     display: inline-block;
@@ -165,6 +177,7 @@
     margin: 0 5px;
     overflow: hidden;
     background: #0bb20c;
+    float: left;
   }
   .button b img{
     width: 100%;
@@ -179,6 +192,7 @@
     border-radius: 5px;
     padding: 0 5px;
     background: #fff;
+    float: left;
   }
   .choice{
     color: red;

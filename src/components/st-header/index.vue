@@ -2,11 +2,13 @@
   <div class="st-header">
     <div class="top-header">
       <div class="header">
-        <div class="st-left-arrow"><img src="../../assets/st-shop/icon-0004.png" alt=""></div>
-        <h1 class="st-seach-img"><input type="text"><div><a class="st-seach"><img src="../../assets/st-shop/icon-0003.png" alt=""></a></div></h1>
-        <div class="st-header-right">
-          <a><img src="../../assets/st-shop/icon-0002.png" alt=""></a>
-          <a><img src="../../assets/st-shop/icon-0001.png" alt=""></a>
+        <div style="position: relative;overflow: hidden">
+          <a class="st-left-arrow" @click="Return($event)"><img src="../../assets/st-shop/icon-0004.png" alt=""></a>
+          <h1 class="st-seach-img"><a style="display: block;position: relative" href="gosearch"><input type="text" disabled><div><a class="st-seach"><img src="../../assets/st-shop/icon-0003.png" alt=""></a></div></a></h1>
+          <div class="st-header-right">
+            <a href="ygst/shoppingcar"><img src="../../assets/st-shop/icon-0002.png" alt=""></a>
+            <a @click="DetailsClisk($event)"><img src="../../assets/st-shop/icon-0001.png" alt=""></a>
+          </div>
         </div>
       </div>
     </div>
@@ -20,13 +22,13 @@
           </div>
           <div class="follow">
             <span><em>在售商品</em><em v-html="Json_Data.onlineSaleNum"></em><em>个</em></span>
-            <span><s v-html="Json_Data.distributionDistance"></s><em>km</em>|<b>{{minute}}</b><b>分钟</b></span>
+            <span>配送范围：<s v-html="Json_Data.distributionDistance"></s>km<!--<s v-html="Json_Data.distance"></s><em>km</em>|<b>{{minute}}</b><b>分钟</b>--></span>
           </div>
         </div>
       </div>
     </div>
-    <div class="mud-header" v-bind:style="{background:'url('+Json_Data.signageUrl+') no-repeat',backgroundSize:'350% 350%'}"></div>
-    <div class="st-header-mohu" v-bind:style="{background:'url('+Json_Data.signageUrl+') no-repeat',backgroundSize:'350% 350%'}">
+    <div class="mud-header" v-bind:style="{background:'url('+Json_Data.signageUrl+') no-repeat','background-size':'350% 350%'}"></div>
+    <div class="st-header-mohu" v-bind:style="{background:'url('+Json_Data.signageUrl+') no-repeat','background-size':'350% 350%'}">
       <div style="height: 46px"></div>
       <div class="st-shop-name">
         <div class="st-shop-img"><img v-bind:src="Json_Data.signageUrl" alt=""></div>
@@ -49,7 +51,7 @@
     </div>
     <div class="placeholder">
       <div class="st-switch">
-        <router-link v-for="(item,$index) in naver" :to='item.href' :class="{'border':item.border,'unactive':!item.border}"><span @click="selectStyle(item, $index)"><i v-html="item.classification"></i></span></router-link>
+        <router-link v-for="(item,$index) in naver" :to='item.href+"&sellerId="+Json_Data.uid' :class="{'border':item.border,'unactive':!item.border}"><span @click="selectStyle(item, $index)"><i v-html="item.classification"></i></span></router-link>
       </div>
     </div>
   </div>
@@ -64,19 +66,11 @@
       naver:Array,
       seach:Boolean,
       Json_Data:Object,
-      minute:Number,
-      StFollows:Function
-    },
-    methods: {
-      selectStyle:function(item, index) {
-        this.$nextTick(function () {
-          this.naver.forEach(function (item) {
-            Vue.set(item, 'border', false);
-          });
-          Vue.set(item, 'border', true);
-        });
-//        window.location.reload()
-      }
+      //minute:Number,
+      StFollows:Function,
+      selectStyle:Function,
+      DetailsClisk:Function,
+      Return:Function
     }
   }
 </script>
@@ -97,13 +91,13 @@
     left: 0;
     width: 100%;
     z-index: 999;
-
+    height: 40px;
   }
   .st-left-arrow{
     position: absolute;
     width: 30px;
     height: 30px;
-    top: 8px;
+    top: 3px;
     left: 15px;
     font-size: 14px;
     line-height: 21px;
@@ -119,9 +113,10 @@
     display: -webkit-flex;
     display: flex;
     align-items: center;
+    cursor: pointer;
   }
   .st-left-arrow img{
-    width: 32%;
+    width: 100%;
     display: block;
     margin: auto;
   }
@@ -154,7 +149,7 @@
   .st-header-right{
     right: 15px;
     position: absolute;
-    top: 8px;
+    top: 3px;
     display: block;
     font-size: 14px;
     line-height: 30px;
@@ -169,6 +164,7 @@
     background: #ffffff;
     text-align: center;
     margin-left: 5px;
+    cursor: pointer;
     opacity: .5;
     webkit-box-align: center;
     -webkit-align-items: center;
@@ -178,7 +174,7 @@
     align-items: center;
   }
   .st-header-right a img{
-    width: 50%;
+    width: 100%;
     display: block;
     margin: auto;
   }
@@ -198,7 +194,7 @@
     position: absolute;
     width: 20%;
     max-width: 150px;
-    top:10%;
+    top:6%;
     left: 4%;
     text-align: center;
     -webkit-border-radius: 8px;
@@ -244,7 +240,7 @@
   .follow{
     overflow: hidden;
     padding-top: 2%;
-    padding-bottom: 1%;
+    padding-bottom: 3%;
   }
   .follow span{
     display: block;
@@ -270,7 +266,7 @@
     padding-right: 0 !important;
   }
   .st-notice{
-    padding-top: 5%;
+    padding-top: 8%;
     overflow: hidden;
     background: #ffffff;
     padding-bottom: 2%;
@@ -316,7 +312,8 @@
     overflow: hidden
   }
   .mud-header{
-    background: url("../../assets/st-shop/icon-005.png") no-repeat;background-size: 350% 350%;
+    background: url("../../assets/st-shop/icon-005.png") no-repeat;
+    background-size: 350% 350% !important;
     -moz-background-size: 350% 350%; /*  Firefox 3.6 */
     -o-background-size: 350% 350%;/* Opera 9.5 */
     -webkit-background-size: 350% 350%;/* Safari 3.0 */
@@ -359,12 +356,10 @@
     font-style: inherit;
     line-height: 2.5rem;
     display: inline-block;
+    font-size: 1.2rem;
   }
   .border i{
     border-bottom: 2px solid #0BB20C;
-  }
-  .st-header-title{
-    position: relative;
   }
   .st-header-title input{
     width: 100%;
@@ -387,7 +382,7 @@
     margin-top: 4px;
   }
   .st-seach img{
-    width: 50%;
+    width: 100%;
   }
   .st-seach-img{
     margin: 0 88px;
@@ -405,13 +400,14 @@
   }
   .st-seach-img input{
     display: none;
+    background: #fff;
   }
   .st-seach-img div{
     position: relative;
     width: 100%;
     height: 30px;
   }
-  .st-seach-img a{
+  .st-seach-img .st-seach{
     background: #ffffff;
     width: 30px;
     height: 30px;
@@ -425,8 +421,8 @@
     top: 0;
     left: inherit;
   }
-  .st-seach-img a img{
-    width: 50%;
+  .st-seach-img .st-seach img{
+    width: 100%;
     margin: auto;
     display: block;
   }

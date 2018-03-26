@@ -59,8 +59,8 @@ export default {
       var that = this
       var url = 'https://chat.yggx.com/index.php/shop/select_evaluation.html'
       var params = {
-        sellerId:that.$route.query.uid, //149193 215100
-        Callback:that.$route.query.Callback
+        sellerId:that.$route.query.sellerId, //149193 215100
+        Callback:'jsonp'
       }
       $.ajax({
         url:url,
@@ -87,6 +87,7 @@ export default {
               Vue.set(res.data.rows[i],"picture",pus)
             }
             Vue.set(that,"stcomments",res.data.rows)
+            console.log(that.stcomments)
             //v-for 渲染完成后
             that.$nextTick(() => {
               var Attitude = 0
@@ -128,7 +129,6 @@ export default {
               }else {
                 that.generalnumber = parseFloat((Description/(res.data.totalRowNum*5)*5+Quality/(res.data.totalRowNum*5)*5+Attitude/(res.data.totalRowNum*5)*5)/3).toFixed(1)
               }
-              //console.log(that.generalnumber)
               //个人平分星的宽度
               $('.st-pingjia-huise').each(function () {
                 $(this).find('.st-pingjia').css({width:$(this).width()+'px'})
@@ -136,7 +136,7 @@ export default {
               $('.placeholder').css({height:$('.st-switch').height()+'px'})
             })
           }else {
-            alert('请求失败！')
+            alert('请求失败5')
           }
         }
       })

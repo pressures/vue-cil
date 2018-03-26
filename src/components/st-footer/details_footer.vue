@@ -1,9 +1,9 @@
 <template>
   <div class="details-footer">
     <div class="left-shop">
-      <span><img src="../../assets/st-shop/icon-0152.png" alt=""></span>
-      <router-link :to="shophref" class="one"><b><img src="../../assets/st-shop/icon-0116.png" alt=""></b><s>店铺</s></router-link>
-      <a class="tow"><b><img src="../../assets/st-shop/icon-0117.png" alt=""></b><s>客服</s></a>
+      <a class="shopcart" href="ygst/shoppingcar"><img src="../../assets/st-shop/icon-0152.png" alt=""></a>
+      <a :href="shophref" class="one"><b><img src="../../assets/st-shop/icon-0116.png" alt=""></b><s>店铺</s></a>
+      <a class="tow" :href="kefuhref"><b><img src="../../assets/st-shop/icon-0117.png" alt=""></b><s>客服</s></a>
       <a class="three" @click="Specifications($event)"><b><img src="../../assets/st-shop/icon-0118.png" alt=""></b><s>购物车</s></a>
     </div>
     <div class="reight-button">
@@ -18,7 +18,8 @@
     props:{
       Specifications:Function,
       DetailsClisk:Function,
-      shophref:String
+      shophref:String,
+      kefuhref:String
     }
   }
 </script>
@@ -32,8 +33,12 @@
     display:flex;
     justify-content:space-between;
     z-index: 20;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
   }
   .left-shop{
+    float: left;
     overflow: hidden;
     webkit-box-align: center;
     -webkit-align-items: center;
@@ -41,14 +46,17 @@
     display: -webkit-flex;
     display: flex;
     align-items: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
-  .left-shop span{
+  .left-shop .shopcart{
     display: block;
     float: left;
     background: #19B754;
-    padding: 1.1rem 8px;
+    padding: 1.6rem 8px;
+    margin: 0 !important;
   }
-  .left-shop span img{
+  .left-shop .shopcart img{
     width: 60%;
     display: block;
     margin: auto;
@@ -56,13 +64,14 @@
   .left-shop a{
     display: block;
     float: left;
-    margin-left: 1.3rem;
+    margin-left: .5rem;
+    padding: 5% 0;
   }
   .left-shop a b{
     display: block;
-    width: 80%;
+    width: 60%;
     margin: auto;
-    max-width: 30px;
+
   }
   .left-shop a b img{
     width: 100%;
@@ -73,12 +82,17 @@
     color: #333;
   }
   .reight-button{
+    float: right;
     webkit-box-align: center;
     -webkit-align-items: center;
     display: -webkit-box;
     display: -webkit-flex;
     display: flex;
     align-items: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding: 4% 0;
+    overflow: hidden;
   }
   .reight-button a:first-child{
     background: #FF9934;
@@ -90,5 +104,6 @@
     color: #fff;
     border-radius: 5px;
     margin: 0 5px;
+    float: left;
   }
 </style>

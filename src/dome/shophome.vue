@@ -2,17 +2,22 @@
   <div id="app">
     <st-header
       :Json_Data="Json_Data"
-      :minute="minute"
       :Isdata="Isdata"
       :naver="naver"
       :seach="seach"
       :StFollows="StFollows"
+      :selectStyle="selectStyle"
+      :DetailsClisk="DetailsClisk"
+      :Return="Return"
     />
     <router-view></router-view>
-    <st-footer :Navigation="Navigation" :This_Navigation="This_Navigation" :classification="classification"></st-footer>
+    <st-footer
+      :Navigation="Navigation"
+      :This_Navigation="This_Navigation"
+      :classification="classification"/>
+    <layer :DetailsCliskclose="DetailsCliskclose"/>
   </div>
 </template>
-
 <script src="../../data/shop.js"></script>
 
 <style>

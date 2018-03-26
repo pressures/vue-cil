@@ -2,26 +2,27 @@
   <div id="layerdetails" class="layui-m-layer layui-m-layer1">
     <div @click="DetailsCliskclose($event)" class="layui-m-layershade"></div>
     <div class="layui-m-layermain">
-      <div class="layui-m-layersection"><!----> <!---->
-        <div class="layui-m-layerchild layui-m-anim-up"><!---->
+      <div class="layui-m-layersection">
+        <div class="layui-m-layerchild layui-m-anim-up">
           <div class="layui-m-layercont">
             <div class="sharebox">
               <p>
-                <a href="quweixin?{$params}"><i></i><b>微信</b></a>
-                <a href="qupengyouquan?{$params}"><i></i><b>朋友圈</b></a>
-                <a href="quqq?{$params}"><i></i><b>QQ</b></a>
-                <a href="qukongjian?{$params}"><i></i><b>空间</b></a>
-                <a href="quweibo?{$params}"><i></i><b>微博</b></a>
+                <a href="https://chat.yggx.com/index.php/product/quweixin"><i></i><b>微信</b></a>
+                <a href="https://chat.yggx.com/index.php/product/qupengyouquan"><i></i><b>朋友圈</b></a>
+                <a href="https://chat.yggx.com/index.php/product/quqq"><i></i><b>QQ</b></a>
+                <a href="https://chat.yggx.com/index.php/product/qukongjian"><i></i><b>空间</b></a>
+                <a href="https://chat.yggx.com/index.php/product/quweibo"><i></i><b>微博</b></a>
               </p>
               <p>
-                <a href="qushejiaoquan?{$params}"><i></i><b>社交圈</b></a>
-                <a href="qupengyou?{$params}"><i></i><b>朋友</b></a>
-                <a href="fuzhilianjie?{$params}"><i></i><b>复制链接</b></a>
+                <a href="https://chat.yggx.com/index.php/product/qushejiaoquan"><i></i><b>社交圈</b></a>
+                <a href="https://chat.yggx.com/index.php/product/qupengyou"><i></i><b>朋友</b></a>
+                <a href="https://chat.yggx.com/index.php/product/fuzhilianjie"><i></i><b>复制链接</b></a>
               </p>
             </div>
           </div>
           <div class="layui-m-layerbtn"><span @click="DetailsCliskclose($event)" type="1">取消</span></div>
-        </div> <!----></div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
