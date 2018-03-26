@@ -32,7 +32,7 @@
   .display-block{
     display: block !important;
   }
-  .st-product{
+  /*.st-product{
     padding-bottom: 45px;
-  }
+  }*/
 </style>

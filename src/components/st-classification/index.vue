@@ -1,12 +1,12 @@
 <template>
   <div class="home-classification">
-    <ul>
+    <ul class="fenlei">
       <li>
-        <router-link v-for="item in classify" :to="item.linkhref"><img :src="item.img" alt=""><span v-html="item.name"></span></router-link>
+        <a v-for="item in classify" :href="item.linkhref"><img v-lazy="item.img" alt=""><span v-html="item.name"></span></a>
       </li>
     </ul>
     <!--海报位置-->
-    <div class="poster"><router-link :to="Advertisement.href"><img :src="Advertisement.img" alt=""></router-link></div>
+    <div class="poster"><a :href="Advertisement.href+Advertisement.name"><img v-lazy="Advertisement.img" alt=""></a></div>
     <!--热卖单品-->
     <div class="numerous">
       <p><s></s><b v-html="numerous"></b></p>
@@ -14,7 +14,7 @@
     <div class="advertisement">
       <ul>
         <li>
-          <router-link v-for="item in Single" :to="item.href"><img :src="item.img" alt=""></router-link>
+          <a v-for="item in Single" :href="item.href"><img v-lazy="item.img" alt=""></a>
         </li>
       </ul>
     </div>
@@ -22,19 +22,20 @@
     <div class="numerous">
       <p><s></s><b v-html="Recommend"></b></p>
     </div>
+    <div id="allmap"></div>
     <div class="st-evaluation-score" v-for="item in stcomments">
-      <router-link :to="item.href">
+      <a :datato="item.href" :href="item.href" @click="targan($event)" class="enents">
         <table>
           <tr>
-            <td class="evaluating-portrait" rowspan="4"><span><img v-bind:src="item.signageUrl" alt=""></span></td>
-            <td><big v-html="item.name"></big></td>
-            <td style="text-align:right;color:#666666"><s class="yinye">营</s></td>
+            <td class="evaluating-portrait" rowspan="4"><span><img v-lazy="item.signageUrl" alt=""></span></td>
+            <td width="55%"><big v-html="item.name"></big></td>
+            <td width="15%" style="text-align:right;color:#666666"><s class="yinye">营</s></td>
           </tr>
           <tr>
-            <td class="state"><span>在售 <em v-html="item.onlineSaleNum"></em></span><s>收藏<em v-html="item.collectNum"></em></s></td>
+            <td width="70%" colspan="2" class="state"><span>在售 <em v-html="item.onlineSaleNum"></em></span><s>收藏<em v-html="item.collectNum"></em></s></td>
           </tr>
           <tr>
-            <td>
+            <td width="55%">
               <span class="xingji">
                 <s class="st-pingjia-huise huise"><img src="../../assets/st-shop/icon-110.png" alt="">
                   <a :style="{'width':PersonalDeuce(item.evaluateGoodNum,item.evaluateNum)+'%'}"><i class="st-pingjia pingjia"><img src="../../assets/st-shop/icon-109.png" alt=""></i></a>
@@ -42,7 +43,7 @@
                 <b v-html="Fraction(item.evaluateGoodNum,item.evaluateNum)"></b>
               </span>
             </td>
-            <td width="28%">
+            <td width="15%">
               <span class="st-time-distance">
                 <s><em v-html="item.distance"></em></s>
                 <b v-html="item.time"></b>
@@ -50,7 +51,7 @@
             </td>
           </tr>
           <tr>
-            <td colspan="2" class="notice">
+            <td colspan="2" class="notice" width="70%">
               <p>
                 <s><img src="../../assets/st-shop/icon-21.png" alt=""></s>
                 <span v-html="item.announcement"></span>
@@ -58,7 +59,7 @@
             </td>
           </tr>
         </table>
-      </router-link>
+      </a>
     </div>
   </div>
 </template>
@@ -73,11 +74,15 @@
       numerous:String,
       Single:Array,
       Recommend:String,
-      Fraction:Function
+      Fraction:Function,
+      targan:Function
     }
   }
 </script>
 <style>
+  .home-classification{
+    margin-bottom: 12%;
+  }
   .home-classification ul{
     margin: 0;
     padding: 0;
@@ -95,6 +100,14 @@
     float: left;
     margin-bottom: 0;
   }
+  .home-classification ul.fenlei li a{
+    width: 14%;
+    margin: 3%;
+    margin-top: 1%;
+    display: block;
+    float: left;
+    margin-bottom: 0;
+  }
   .home-classification ul li a img{
     width: 100%;
     display: block;
@@ -104,6 +117,8 @@
     text-align: center;
     color: #333;
     margin-top: 5px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
   .poster{
     width: 100%;
@@ -225,6 +240,7 @@
     display: -webkit-flex;
     display: flex;
     align-items: center;
+    width: 100%;
   }
   .xingji s{
     position: relative;
@@ -292,12 +308,14 @@
     background: #EFFFF5;
   }
   .evaluating-portrait{
-    width: 60px;
+    width: 30%;
+    max-width: 100px;
   }
   .evaluating-portrait span{
     display: block;
-    width: 80px;
-    height: 80px;
+    width: 100%;
+    max-width: 80px;
+    max-height: 80px;
     overflow: hidden;
     background: #cccccc;
     margin-right: 10px;
@@ -309,7 +327,8 @@
     background: #ffffff;
     margin-top: 5px;
     overflow: hidden;
-    padding: 10px;
+    width: 96%;
+    padding: 2%;
   }
   .st-evaluation-score table{
     width: 100%;
@@ -324,7 +343,7 @@
   }
   .state span,.state s{
     color: #777;
-    font-size: .6rem;
+    font-size: .8rem;
   }
   .state s{
     margin-left: 10px;
@@ -366,7 +385,7 @@
   }
   .notice p span{
     display: inline-block;
-    font-size: .8rem;
+    font-size: 1rem;
     color: #666;
     margin-left: 10px;
   }

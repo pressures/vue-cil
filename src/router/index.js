@@ -5,5 +5,6 @@ import routes from './router.js'
 Vue.use(Router)
 
 export default new Router({
-  routes
+  //mode: 'history', //去掉#
+  routes:routes
 })

@@ -2,13 +2,17 @@
   <div class="home-header">
     <div class="home-address">
       <p>
-        <span class="dingwei"><img src="../../assets/st-shop/icon-01.png" alt=""></span>
-        <s class="address" v-html="header.address">江干区白杨街道111111111</s>
-        <b class="slide"><img src="../../assets/st-shop/icon-02.png" alt=""></b>
-        <router-link :to="header.newshref" class="asuccess"><img src="../../assets/st-shop/icon-03.png" alt=""></router-link>
+        <a class="address-dinwei" :href="header.href">
+          <span class="dingwei"><img src="../../assets/st-shop/icon-01.png" alt=""></span>
+          <s class="address" v-html="header.address"></s>
+          <b class="slide"><img src="../../assets/st-shop/icon-02.png" alt=""></b>
+        </a>
+        <a :href="header.newshref" class="asuccess"><img src="../../assets/st-shop/icon-03.png" alt=""></a>
       </p>
-      <p><input @focus="Inputchange($event)" @blur="Inputblur($event)" type="text" placeholder="输入体验店,商品名称"><b class="home-position"><img src="../../assets/st-shop/icon-04.png" alt=""></b></p>
-    </div>
+      <div class="placeholder">
+        <div class="seach-position"><p class="seach-product"><a class="seach" href="gosearch"><input disabled @focus="Inputchange($event)" @blur="Inputblur($event)" type="text" placeholder="输入体验店,商品名称"><b class="home-position"><img src="../../assets/st-shop/icon-04.png" alt=""></b></a></p></div>
+      </div>
+      </div>
   </div>
 </template>
 <script>
@@ -35,10 +39,22 @@
   }
 </script>
 <style>
+  .placeholder{overflow: hidden}
+  .seach-position{
+    position: relative;
+    overflow: hidden;
+  }
+  .seach-product{
+    background: #19B955;
+    padding: 10px 5% !important;
+    /*position: fixed !important;*/
+    width: 90%;
+    z-index: 100;
+  }
   .home-header{
     background: #19B955;
-    padding: 5px 0;
     overflow: hidden;
+    padding-top: 5px;
   }
   .home-header p{
     padding: 5px 16px;
@@ -50,7 +66,20 @@
     display: -webkit-flex;
     display: flex;
     align-items: center;
+  }
+  .home-header p a.address-dinwei{
+    overflow: hidden;
+    webkit-box-align: center;
+    -webkit-align-items: center;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    align-items: center;
     position: relative;
+  }
+  .home-header p a.seach{
+    display: inline-block;
+    width: 100%;
   }
   .home-header p .dingwei,.home-header p .address,.home-header p .slide{
     display: block;
@@ -72,7 +101,7 @@
     width: 100%;
   }
   .home-header p .address{
-    width: 130px;
+    max-width: 130px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -100,15 +129,18 @@
     right: 16px;
   }
   .home-header p input{
-    width: 100%;
+    width: 90%;
     border: none;
     outline: medium;
-    line-height: 2.4rem;
-    padding: 0 5px;
+    line-height: 2.6rem;
+    padding-right: 2%;
     border-radius: 50px;
-    font-size: 1.2rem;
-    padding-left: 30px;
+    font-size: 1rem;
+    padding-left: 8%;
     text-align: center;
+    background: #fff;
+    text-indent: .5rem;
+    display: block;
   }
   .home-position{
     position: absolute;
@@ -117,6 +149,7 @@
     max-width: 30px;
     /*left: 22px;*/
     left: 31%;
+    top:32%;
     webkit-box-align: center;
     -webkit-align-items: center;
     display: -webkit-box;

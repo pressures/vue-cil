@@ -21,10 +21,10 @@
       <div class="st-evaluating-indicator">
         <a v-for="(item, $index) in whole"  :class="{'active':item.active,'unactive':!item.active}" v-html="item.praise" @click="selectStyle(item, $index)"></a>
       </div>
-      <div class="st-evaluation-score" v-for="item in stcomments">
+      <div class="pingjia-st-evaluation-score" v-for="item in stcomments">
         <table>
           <tr>
-            <td class="st-evaluating-portrait" rowspan="6"><span><img v-bind:src="item.headPortrait" alt=""></span></td>
+            <td class="st-evaluating-portrait" rowspan="6"><span><img v-lazy="item.headPortrait" alt=""></span></td>
             <td><h3 v-html="item.username"></h3></td>
             <td style="text-align:right;color:#666666"><span v-html="item.addTime"></span></td>
           </tr>
@@ -42,12 +42,12 @@
           </tr>
           <tr>
             <td colspan="2">
-              <span class="st-shaitu" v-for="imges in item.picture"><img v-bind:src="imges.img" alt=""></span>
+              <span class="st-shaitu" v-for="imges in item.picture"><img v-lazy="imges.img" alt=""></span>
             </td>
           </tr>
           <tr v-if="item.img!=undefined&&item.img!=null">
             <td class="st-dizhi" colspan="2">
-              <i v-if="item.img!=undefined&&item.img!=null"><img :src="item.img" alt=""></i>
+              <i v-if="item.img!=undefined&&item.img!=null"><img v-lazy="item.img" alt=""></i>
               <span style="color: #666666" v-html="item.address"></span>
             </td>
           </tr>
@@ -120,11 +120,12 @@
     text-align: center;
   }
   .st-degree{
-    width: 56%;
+    width: 58%;
     padding: 0 6%;
   }
   .st-degree span{
     display: block;
+    overflow: hidden;
   }
   .st-degree span{
     padding: 2px 0;
@@ -139,6 +140,7 @@
 
   .st-degree span b,.st-degree span s,.st-degree span em{
     display: inline-table;
+    float: left;
   }
   .st-degree span em{
     display:flex;
@@ -211,8 +213,8 @@
   }
   @media screen and (max-width:720px){
     .st-degree span s{
-      width: 60%;
-      margin-left: 10px;
+      width: 50%;
+      margin-left: 2%;
     }
     .st-degree span s img,.st-xingji .st-pingjia-huise img{
       width: 100%;
@@ -256,7 +258,7 @@
   .st-evaluating-portrait span img{
     width: 100%;
   }
-  .st-evaluation-score{
+  .pingjia-st-evaluation-score{
     background: #ffffff;
     margin-top: 5px;
     overflow: hidden;
@@ -268,7 +270,7 @@
     margin: 0;
     padding: 0;
   }
-  .st-evaluation-score table{
+  .pingjia-st-evaluation-score table{
     width: 100%;
   }
   .st-shaitu{

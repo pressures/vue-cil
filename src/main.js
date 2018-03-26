@@ -6,14 +6,13 @@ import router from './router'
 //轮播组件
 import VueAwesomeSwiper from "vue-awesome-swiper"
 Vue.use(VueAwesomeSwiper)
-
 //图片懒加载
 import VueLazyload from "vue-lazyload"
 Vue.use(VueLazyload, {
-  preLoad: 1.3,
-  error: 'dist/error.png',
-  loading: 'dist/loading.gif',
-  attempt: 1
+  preLoad: 1,
+  error: require('./assets/st-shop/loading.gif'),
+  loading: require('./assets/st-shop/loading.gif'),
+  attempt: 2
 })
 
 //弹窗
@@ -27,3 +26,4 @@ var app = new Vue({
   router,
   render: h => h(App)
 })
+//console.log(app)
