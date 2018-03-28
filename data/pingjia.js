@@ -1,7 +1,6 @@
 import StEvaluate from "../src/components/st-evaluate/index";
 import Vue from "vue"
 export default {
-  //name:"pingjia",
   components:{
     StEvaluate
   },

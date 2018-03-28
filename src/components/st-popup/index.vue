@@ -11,6 +11,7 @@
              :data-skuid="item.id"
              :data-Stock="item.stockNum"
              :data-productId="product.id"
+             :data-discountedPrice="item.discountedPrice"
              :data-freightTemplateId="product.freightTemplateId"
              :data-shopId="product.shopId"
              :data-isDiscount="item.isDiscount"
@@ -193,6 +194,7 @@
     padding: 0 5px;
     background: #fff;
     float: left;
+    font-size: 1.2rem;
   }
   .choice{
     color: red;

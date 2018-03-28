@@ -60,6 +60,6 @@ export default{
     }
   },
   mounted(){
-    this.ProductLists()
+    //this.ProductLists()
   }
 }

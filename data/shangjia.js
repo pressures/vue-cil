@@ -47,7 +47,7 @@ export default {
         dataType: "jsonp",
         success: function (res) {
           if (res.code == 'SUCCESS') {
-            var WorkTime = res.data.businessHoursBegin/60
+            var WorkTime = (res.data.businessHoursBegin/60).toFixed(2)
             var WorkTimend = res.data.businessHoursEnd/60
             var workday = res.data.workday
             var split = new Array()
@@ -58,7 +58,7 @@ export default {
             days = String(workday).split(',')
             that.latitude = res.data.latitude
             that.longitude = res.data.longitude
-
+            console.log(split)
             var date = "星期"
             for (var i=0;i<days.length;i++){
               switch (days[i]){
@@ -109,9 +109,19 @@ export default {
               split[1] = 0
             }
             if(split[0] < 10 ){
-              res.data.businessHoursBegin = "0"+split[0]+":"+split[1]+"0"//上班时间
+              //res.data.businessHoursBegin = "0"+split[0]+":"+split[1]+"0"//上班时间
+              if(split[1] < 10){
+                res.data.businessHoursBegin = "0"+split[0]+":"+split[1]+"0"//上班时间
+              }else {
+                res.data.businessHoursBegin = "0"+split[0]+":"+split[1]//上班时间
+              }
             }else {
-              res.data.businessHoursBegin = split[0]+":"+split[1]+"0"//上班时间
+              //res.data.businessHoursBegin = split[0]+":"+split[1]+"0"//上班时间
+              if(split[1] < 10){
+                res.data.businessHoursBegin = split[0]+":"+split[1]+"0"//上班时间
+              }else {
+                res.data.businessHoursBegin = split[0]+":"+split[1]//上班时间
+              }
             }
             var merchant = [
               {

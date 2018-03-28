@@ -94,6 +94,7 @@ export default {
         success:function (res) {
           if(res.code=='SUCCESS'){
             that.Json_Data=res.data
+            console.log(that.Json_Data)
             that.Foorter()
           }else {
             alert('请求失败4')
@@ -111,7 +112,7 @@ export default {
         ',"address":'+'"'+this.Json_Data.detailAddress+'"'+
         ',"type":1}'
       $.each($(event.target).parents('body').find('#layerdetails .sharebox a'),function () {
-        $(this).attr('href',$(this).attr('href')+encodeURI(paramete))
+        $(this).attr('href',$(this).attr('href').split('?')[0]+encodeURI(paramete))
       })
       $(event.target).parents('body').find('#layerdetails').slideDown()
     },
@@ -181,7 +182,6 @@ export default {
               Vue.set(res.data[i],"href",ref+res.data[i].id)
             }
             that.classification[0].subclass=res.data
-            console.log(that.classification[0].subclass)
           }else {
             alert('请求失败2')
           }
@@ -205,7 +205,7 @@ export default {
         $(event.target).parents('ul').find('li b').fadeOut()
         $(event.target).parents('ul').find('li p').slideUp()
         this.$layer.msg("暂无上新!");
-        $(event.target).attr('href',ref)
+        //$(event.target).attr('href',ref)
       }else {
         this.naver[0].border = true
         this.naver[1].border = false
@@ -213,7 +213,7 @@ export default {
         $(event.target).parents('ul').find('li b').fadeOut()
         $(event.target).parents('ul').find('li p').slideUp()
         this.$layer.msg("暂无排行!");
-        $(event.target).attr('href',ref)
+        //$(event.target).attr('href',ref)
       }
     },
     This_Navigation:function (event) {
@@ -276,7 +276,7 @@ export default {
         }
       }
     });
-    this.Created()
+    //this.Created()
     this.Follows()
     //$('.st-footer ul li:first-child a').attr('href','javascript:;')
     //console.log($('.st-footer ul li:first-child a').attr('href'))

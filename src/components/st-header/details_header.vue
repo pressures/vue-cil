@@ -4,7 +4,7 @@
       <div @click="Return" class="details-left-arrow"><img src="../../assets/st-shop/icon-7.png" alt=""></div>
       <div class="header-right">
         <a @click="Collection($event)"><img src="../../assets/st-shop/icon-5.png" alt=""></a>
-        <a @click="DetailsClisk($event)"><img src="../../assets/st-shop/icon-6.png" alt=""></a>
+        <a @click="DetailsCliskHeader($event)"><img src="../../assets/st-shop/icon-6.png" alt=""></a>
       </div>
     </div>
   </div>
@@ -17,7 +17,8 @@
     props:{
       DetailsClisk:Function,
       Collection:Function,
-      Return:Function
+      Return:Function,
+      DetailsCliskHeader:Function
     }
   }
 </script>

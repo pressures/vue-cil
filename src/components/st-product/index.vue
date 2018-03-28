@@ -42,6 +42,7 @@
   .st-product-cheage a span{
     display: block;
     height: 50vw;
+    overflow: hidden;
   }
   .st-product-cheage a span img{
     display: block;

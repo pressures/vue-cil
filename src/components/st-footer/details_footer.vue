@@ -7,8 +7,8 @@
       <a class="three" @click="Specifications($event)"><b><img src="../../assets/st-shop/icon-0118.png" alt=""></b><s>购物车</s></a>
     </div>
     <div class="reight-button">
-      <a @click="DetailsClisk($event)">分享减价</a>
-      <a @click="Specifications($event)">立即购买</a>
+      <a @click="DetailsClisk($event)"><s>￥{{product.suggestedPrice}}</s><b>分享价</b></a>
+      <a @click="Specifications($event)"><s>￥{{product.displayPrice}}</s><b>立即购买</b></a>
     </div>
   </div>
 </template>
@@ -19,7 +19,8 @@
       Specifications:Function,
       DetailsClisk:Function,
       shophref:String,
-      kefuhref:String
+      kefuhref:String,
+      product:Object
     }
   }
 </script>
@@ -36,6 +37,7 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+    height: 8vh;
   }
   .left-shop{
     float: left;
@@ -91,19 +93,25 @@
     align-items: center;
     text-overflow: ellipsis;
     white-space: nowrap;
-    padding: 4% 0;
     overflow: hidden;
+  }
+  .reight-button a b,.reight-button a s{
+    display: block;
+    text-align: center;
+    line-height: 4vh;
   }
   .reight-button a:first-child{
     background: #FF9934;
   }
   .reight-button a{
     display: inline-block;
-    padding: 5px 10px;
+    height: 8vh;
+    padding: 0 10px;
+    /*line-height: 8vh;*/
     background: #19B754;
     color: #fff;
-    border-radius: 5px;
-    margin: 0 5px;
+    /*border-radius: 5px;*/
+    /*margin: 0 5px;*/
     float: left;
   }
 </style>

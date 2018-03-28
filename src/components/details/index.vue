@@ -10,7 +10,7 @@
     <div class="specifications">
       <p v-html="product.productName">海鲜组合1冰冻海鲜海鲜组合1冰冻海鲜海鲜组合1</p>
       <div class="price">
-        <span>￥<em v-html="product.displayPrice">125.00</em></span>
+        <span>￥<em v-html="product.displayPrice"></em></span>
         <a @click="Specifications($event)">选规格</a>
       </div>
       <div class="profit">
@@ -79,7 +79,7 @@
 <style>
   .particulars-img{
     width: 100%;
-    min-height: 300px;
+    background: #fff;
   }
   .particulars-img img{
     width: 100%;
